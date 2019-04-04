@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 	answers[5].str("2 2 0 -7.5"); // d/dx a
 
 	Polynomial a(0), b(0), c(0), d(3), e(1), r(0);
-
+    
 	a.Read(data[0]);
 	b.Read(data[1]);
 	c.Read(data[2]);

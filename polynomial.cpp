@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <cfloat>
+#include <cmath>
 
 using std::istream;
 using std::ostream;
@@ -33,14 +34,99 @@ Polynomial::Polynomial(const Polynomial& polynomial): _degree(polynomial._degree
 	}
 }
 Polynomial::~Polynomial(){
-	// DO THIS FIRST TO PREVENT MEMORY LEAKS!
+     delete [] _coefficients;
+    
 }
-const Polynomial Polynomial::Sum(const Polynomial& rhs)const{
-	return Polynomial(0);
+const Polynomial Polynomial::Sum(const Polynomial& rhs)const
+{
+    size_t maxDegree = 0;
+    size_t minDegree = 0;
+    if(_degree > rhs._degree)
+    {
+        maxDegree = _degree;
+        minDegree = rhs._degree;
+        
+        
+    }
+    else
+    {
+        maxDegree = rhs._degree;
+        minDegree = _degree;
+    }
+    float newCoefs[maxDegree + 1];
+    if(_degree > rhs._degree)
+    {
+        for(int i = 0; i < maxDegree + 1; i++)
+        {
+            newCoefs[i] = _coefficients[i];
+        }
+        for(int j = 0; j < minDegree + 1; j++)
+        {
+            newCoefs[j] += rhs._coefficients[j];
+        }
+    }
+    else
+    {
+        for(int i = 0; i < maxDegree; i++)
+        {
+            newCoefs[i] = rhs._coefficients[i];
+        }
+        for(int j = 0; j < minDegree + 1; j++)
+        {
+            newCoefs[j] += _coefficients[j];
+        }
+        
+    }
+    
+
+    
+    return Polynomial(maxDegree, newCoefs);
 }
 const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
-	return Polynomial(0);
+	
+    size_t maxDegree = 0;
+    size_t minDegree = 0;
+    if(_degree > rhs._degree)
+    {
+        maxDegree = _degree;
+        minDegree = rhs._degree;
+    }
+    else
+    {
+        maxDegree = rhs._degree;
+        minDegree = _degree;
+    }
+    
+    float newCoefs[maxDegree + 1];
+    if(_degree > rhs._degree)
+    {
+        for(int i = 0; i < maxDegree + 1; i++)
+        {
+            newCoefs[i] = _coefficients[i];
+        }
+        for(int j = 0; j < minDegree + 1; j++)
+        {
+            newCoefs[j] =  newCoefs[j] - rhs._coefficients[j];
+        }
+    }
+    else
+    {
+        for(int i = 0; i < maxDegree; i++)
+        {
+            newCoefs[i] = rhs._coefficients[i];
+        }
+        for(int j = 0; j < minDegree + 1; j++)
+        {
+            newCoefs[j] = newCoefs[j] - _coefficients[j];
+        }
+        
+    }
+    
+    
+    
+    return Polynomial(maxDegree, newCoefs);
 }
+
 const Polynomial Polynomial::Minus()const{
 	Polynomial retVal(*this);
 	for (size_t i = 0; i < _degree + 1; i++) {
@@ -84,7 +170,7 @@ bool Polynomial::Equals(const Polynomial& rhs)const{
 		return false;
 	}
 	for (size_t i=0; i < _degree; i++){
-		if (abs(_coefficients[i] - rhs._coefficients[i]) > 0.0001){
+        if (std::abs(_coefficients[i] - rhs._coefficients[i]) > 0.0001){
 			return false;
 		}
 	}
