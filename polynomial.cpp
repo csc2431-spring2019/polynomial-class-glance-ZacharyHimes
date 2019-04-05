@@ -45,8 +45,6 @@ const Polynomial Polynomial::Sum(const Polynomial& rhs)const
     {
         maxDegree = _degree;
         minDegree = rhs._degree;
-        
-        
     }
     else
     {
@@ -77,8 +75,6 @@ const Polynomial Polynomial::Sum(const Polynomial& rhs)const
         }
         
     }
-    
-
     
     return Polynomial(maxDegree, newCoefs);
 }
@@ -122,8 +118,6 @@ const Polynomial Polynomial::Subtract(const Polynomial& rhs)const{
         
     }
     
-    
-    
     return Polynomial(maxDegree, newCoefs);
 }
 
@@ -134,14 +128,45 @@ const Polynomial Polynomial::Minus()const{
 	}
 	return retVal;
 }
-const Polynomial Polynomial::Multiply(const Polynomial& rhs)const{
-	return Polynomial(0);
+
+const Polynomial Polynomial::Multiply(const Polynomial& rhs)const
+{
+    
+    size_t  newDegree = rhs._degree + _degree;
+    float newCoefs[newDegree + 1];
+    
+    size_t degA, degB;
+    
+    degA = _degree;
+    degB = rhs._degree;
+    
+    for( int p = 0; p < newDegree; p++ )
+    {
+        newCoefs[p] = 0;
+    }
+    
+    for( int j = 0; j <= degA; j++ )
+    {
+        for( int t = 0; t <= degB; t++ )
+        {
+            newCoefs[ j + t ] += _coefficients[ j ] * rhs._coefficients[ t ];
+        }
+    }
+    
+	return Polynomial(newDegree, newCoefs);
 }
 const Polynomial Polynomial::Divide(const Polynomial& rhs)const{
 	return Polynomial(0);
 }
 const Polynomial Polynomial::Derive()const{
-	return Polynomial(0);
+    float newCoef[_degree -1];
+    for(int i = 0; i < _degree; i++)
+    {
+        newCoef[i] = _coefficients[i] * i + 1;
+        std::cout << newCoef[i] << std::endl;
+    }
+    
+	return Polynomial(_degree - 1, newCoef);
 }
 float Polynomial::Evaluate(float x)const{
 	return FLT_MAX;

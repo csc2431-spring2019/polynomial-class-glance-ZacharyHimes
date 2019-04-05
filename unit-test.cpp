@@ -60,9 +60,9 @@ int main(int argc, char* argv[]){
 	}
 
 	if (a.Derive().Equals(x)){
-		cout << "\tMULTIPLY PASSED " << ++total << endl;
+		cout << "\tDERIVE PASSED " << ++total << endl;
 	}else{
-		cout << "\tMULTIPLY FAILED" << endl;
+		cout << "\tDERIVE FAILED " << endl;
 	}
 
 	if (b.Evaluate(3) == 236.0){
@@ -89,8 +89,6 @@ int main(int argc, char* argv[]){
 		cout << "\tDIVIDE FAILED" << endl;
 	}
 	cout << "UNIT TEST FINAL GRADE = " << (total / 5 * 100) << endl;
-
-
 
 	return 0;
 }
