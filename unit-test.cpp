@@ -60,7 +60,7 @@ int main(int argc, char* argv[]){
 	}
 
 	if (a.Derive().Equals(x)){
-		cout << "\tDERIVE PASSED " << ++total << endl;
+		cout << "\tDERIVE PASSED " << ++total << endl;  // 7.5x^2 + 0x + 2
 	}else{
 		cout << "\tDERIVE FAILED " << endl;
 	}

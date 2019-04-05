@@ -159,17 +159,29 @@ const Polynomial Polynomial::Divide(const Polynomial& rhs)const{
 	return Polynomial(0);
 }
 const Polynomial Polynomial::Derive()const{
-    float newCoef[_degree -1];
-    for(int i = 0; i < _degree; i++)
+   
+    float newCoef[_degree];
+     size_t newDegree = _degree - 1;
+     std::cout << newDegree << " ";
+    for(size_t i = 0; i < _degree; i++)
     {
-        newCoef[i] = _coefficients[i] * i + 1;
-        std::cout << newCoef[i] << std::endl;
+        newCoef[i] = _coefficients[i + 1] * (i + 1);
+        
     }
-    
-	return Polynomial(_degree - 1, newCoef);
+   
+	return Polynomial(newDegree, newCoef);
 }
 float Polynomial::Evaluate(float x)const{
-	return FLT_MAX;
+    
+    int sum = 0;
+    for(int i = 1; i < _degree + 1; i++)
+    {
+        _coefficients[i] = pow(_coefficients[i], i);
+        _coefficients[i] = _coefficients[i] * x;
+        sum += _coefficients[i];
+    }
+    sum += _coefficients[0];
+	return sum;
 }
 float Polynomial::Integrate(float start, float end)const{
 	return FLT_MAX;
