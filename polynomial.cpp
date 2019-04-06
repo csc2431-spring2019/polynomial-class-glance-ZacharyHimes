@@ -162,26 +162,21 @@ const Polynomial Polynomial::Derive()const{
    
     float newCoef[_degree];
      size_t newDegree = _degree - 1;
-     std::cout << newDegree << " ";
+    
     for(size_t i = 0; i < _degree; i++)
     {
         newCoef[i] = _coefficients[i + 1] * (i + 1);
-        
     }
    
 	return Polynomial(newDegree, newCoef);
 }
 float Polynomial::Evaluate(float x)const{
-    
-    int sum = 0;
-    for(int i = 1; i < _degree + 1; i++)
-    {
-        _coefficients[i] = pow(_coefficients[i], i);
-        _coefficients[i] = _coefficients[i] * x;
-        sum += _coefficients[i];
+    int factor = 1, sum = 0;
+    for(int i = 0; i <= _degree; i++) {
+        sum += _coefficients[i] * factor;
+        factor *= x;
     }
-    sum += _coefficients[0];
-	return sum;
+    return sum;
 }
 float Polynomial::Integrate(float start, float end)const{
 	return FLT_MAX;
